@@ -35,7 +35,7 @@ Example
 ------------------------
 
 ```javascript
-const uploader = require('vite-plugin-ali-oss-uploader');
+import uploader from 'vite-plugin-ali-oss-uploader';
 
 export default defineConfig({
   plugins: [
