@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-ali-oss-uploader",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "paul",
   "description": "a vite plugin to upload assets to aliyun oss. 一个vite插件，上传静态资源到阿里云oss",
   "main": "index.js",

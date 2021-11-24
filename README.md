@@ -38,31 +38,35 @@ import uploader from 'vite-plugin-ali-oss-uploader';
 
 export default defineConfig({
   plugins: [
-    uploader({
-      from: ['./build/**', '!./build/**/*.html'],
-      dist: 'path/in/alioss',
-      buildRoot: path.resolve(__dirname, 'dist'),
-      region: 'your region',
-      accessKeyId: 'your key',
-      accessKeySecret: 'your secret',
-      bucket: 'your bucket',
+    {
+      ...uploader({
+        from: ['./build/**', '!./build/**/*.html'],
+        dist: 'path/in/alioss',
+        buildRoot: path.resolve(__dirname, 'dist'),
+        region: 'your region',
+        accessKeyId: 'your key',
+        accessKeySecret: 'your secret',
+        bucket: 'your bucket',
 
-      // 想自定义上传路径就传
-      // 否则按`buildRoot`指定目录的文件结构上传
-      setOssPath(filePath) {
-        // filePath为当前文件路径。函数应该返回路径+文件名。
-        // 如果返回/new/path/to/file.js，则最终上传路径为 /path/in/alioss/new/path/to/file.js
-        return '/new/path/to/file.js';
-      },
+        // 想自定义上传路径就传
+        // 否则按`buildRoot`指定目录的文件结构上传
+        setOssPath(filePath) {
+          // filePath为当前文件路径。函数应该返回路径+文件名。
+          // 如果返回/new/path/to/file.js，则最终上传路径为 /path/in/alioss/new/path/to/file.js
+          return '/new/path/to/file.js';
+        },
 
-      // 想自定义header就传
-      setHeaders(filePath) {
-        // some operations to filePath
-        return {
-          'Cache-Control': 'max-age=31536000'
+        // 想自定义header就传
+        setHeaders(filePath) {
+          // some operations to filePath
+          return {
+            'Cache-Control': 'max-age=31536000'
+          }
         }
-      }
-    })
+      }),
+      apply: 'build', // 只在 build 模式启用
+      enforce: 'post' // 在 Vite 构建插件之后调用该插件
+    }
   ]
 })
 ```   
