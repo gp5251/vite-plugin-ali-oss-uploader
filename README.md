@@ -20,7 +20,6 @@ Options
 - `bucket`: 上传到哪个bucket
 - `timeout`: oss超时设置，默认为30秒(30000)
 - `overwrite`: 是否覆盖oss同名文件。默认false
-- `verbose`: 是否显示上传日志，默认为true
 - `deletOrigin`: 上传完成是否删除原文件，默认false
 - `deleteEmptyDir`: 如果某个目录下的文件都上传过了，是否删除此目录。deleteOrigin为true时候生效。默认false。
 - `setOssPath`: 自定义每个文件上传路径。接收参数为当前文件路径。不传，或者所传函数返回false则按默认方式上传。
@@ -47,6 +46,22 @@ export default defineConfig({
       accessKeyId: 'your key',
       accessKeySecret: 'your secret',
       bucket: 'your bucket',
+
+      // 想自定义上传路径就传
+      // 否则按`buildRoot`指定目录的文件结构上传
+      setOssPath(filePath) {
+        // filePath为当前文件路径。函数应该返回路径+文件名。
+        // 如果返回/new/path/to/file.js，则最终上传路径为 /path/in/alioss/new/path/to/file.js
+        return '/new/path/to/file.js';
+      },
+
+      // 想自定义header就传
+      setHeaders(filePath) {
+        // some operations to filePath
+        return {
+          'Cache-Control': 'max-age=31536000'
+        }
+      }
     })
   ]
 })
